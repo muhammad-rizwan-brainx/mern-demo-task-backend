@@ -1,5 +1,4 @@
 const taskService = require("../services/taskService");
-const validationService = require("../services/taskValidationService");
 const root = process.env.ROOT;
 
 exports.getAllTasks = async (req, res, next) => {
@@ -31,14 +30,10 @@ exports.getAllTasks = async (req, res, next) => {
 exports.addTask = async (req, res, next) => {
   try {
     const { title, description, isCompleted } = req.body;
-    if (!validationService.validateTaskInputs(title, description)) {
+    if (!title || !description) {
       throw "Invalid task fields.";
     }
-
     const result = await taskService.addTask({title, description, isCompleted});
-
-  
-
     res.status(201).json({
       message: "Task Added",
       Task: {
@@ -71,7 +66,7 @@ exports.updateTask = async (req, res, next) => {
     const id = req.params.taskID;
     const payload = req.body;
     if (payload.title || payload.description) {
-      if (!validationService.validateTaskInputs(payload.title, payload.description)) {
+      if (!title || !description) {
         throw "Invalid task fields.";
     }
     const task = await taskService.getTask(id);
