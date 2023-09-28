@@ -5,14 +5,23 @@ const createUser = async (data) => {
 };
 
 const findUser = async (condition) => {
+  try{
+    console.log("service")
   return await User.findOne(condition);
+  } catch (err){
+    console.log("here", err)
+  }
 };
 
 const updatePassword = async (user, newPassword) => {
+ try{
   user.password = newPassword;
-  user.resetToken = null;
-
+  user.resetPasswordToken = null;
+  console.log(user)
   return await user.save();
+ } catch(err){
+  console.log(err)
+ }
 };
 
 const updateResetToken = async (user, resetToken, expiration) => {

@@ -63,13 +63,15 @@ exports.login = async (req, res, next) => {
 exports.changePassword = async (req, res, next) => {
   try {
     const { resetPasswordToken, newPassword } = req.body;
-    const user = await userService.findUser({resetPasswordToken});
+    const user = await userService.findUser({resetPasswordToken: resetPasswordToken});
+    console.log(user)
     if (!user) {
       return res.status(400).json({
         message: "Invalid or expired reset token",
       });
     }
     await userService.updatePassword(user, newPassword);
+    console.log("in change password")
     res.status(200).json(
       { 
         message: "Password changed successfully"
@@ -83,11 +85,11 @@ exports.changePassword = async (req, res, next) => {
 
 exports.forgotPassword = async (req, res, next) => {
   try {
-    const validationErrors = userValidate.validateForgotPasswordCredentials(req.body);
-    if (validationErrors.length > 0) {
+    
+    const { email } = req.body;
+    if (!email) {
       return res.status(422).json({ errors: validationErrors });
     }
-    const { email } = req.body;
     const user = await userService.findUser({email});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -95,6 +97,7 @@ exports.forgotPassword = async (req, res, next) => {
     const resetToken = await createToken.createToken(email, user._id)
     const expiration = Date.now() + 3600000;
     await userService.updateResetToken(user, resetToken, expiration);
+    console.log("here")
     await sendEmail({resetToken, email})
     res.status(200).json({ message: "Password reset link sent successfully" });
   } catch (error) {
