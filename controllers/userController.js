@@ -7,8 +7,8 @@ const userValidate = require("../services/userVAlidationService");
 exports.signup = async (req, res, next) => {
   try {
     const{userName, email, password} = req.body;
-    const validationErrors = userValidate.validateSignupCredentials(userName, email, password);
-    if (validationErrors.length > 0) {
+    
+    if (!userName || !email || !password) {
       return res.status(422).json({ errors: validationErrors });
     }
     const userExists = await userService.findUser({email});
@@ -47,6 +47,7 @@ exports.login = async (req, res, next) => {
       return res.status(200).json({
         message: "successful",
         token: token,
+        user: user
       });
     }
     res.status(401).json({
