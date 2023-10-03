@@ -4,7 +4,7 @@ const taskController = require("../controllers/taskController");
 
 const Router = express.Router();
 
-Router.use(checkAuth);
+// Router.use(checkAuth);
 
 Router.post("/", taskController.addTask);
 Router.get("/", taskController.getAllTasks);

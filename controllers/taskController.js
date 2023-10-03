@@ -3,7 +3,9 @@ const root = process.env.ROOT;
 
 exports.getAllTasks = async (req, res, next) => {
   try {
+    console.log("here")
     const docs = await taskService.getAllTasks();
+    
     const response = {
       count: docs.length,
       tasks: docs.map((doc) => {
