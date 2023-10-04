@@ -17,6 +17,15 @@ exports.updateTask = async (id, payload) => {
   return await Task.updateOne({ _id: id }, { $set: payload });
 };
 
+exports.markDone = async(task)=>{
+  try{
+    task.isCompleted = true;
+    return await task.save();
+   } catch(err){
+    console.log(err)
+   }
+}
+
 exports.deleteTask = async (id) => {
   return await Task.deleteOne({ _id: id });
 };
