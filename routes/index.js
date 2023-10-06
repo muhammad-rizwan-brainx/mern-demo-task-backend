@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
-
 const userRoutes = require("./userRoutes");
 const taskRoutes = require("./taskRoutes");
+
+const router = express.Router();
 
 router.use("/tasks", taskRoutes);
 router.use("/users", userRoutes);

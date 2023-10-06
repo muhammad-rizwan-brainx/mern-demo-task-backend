@@ -9,7 +9,8 @@ Router.use(checkAuth);
 Router.post("/", taskController.addTask);
 Router.get("/", taskController.getAllTasks);
 Router.get("/:taskID", taskController.getTask);
-Router.patch("/:taskID", taskController.updateTask);
+Router.put("/:taskID", taskController.updateTask);
+Router.patch("/:taskID", taskController.markCompleted);
 Router.delete("/:taskID", taskController.deleteTask);
 
 module.exports = Router;

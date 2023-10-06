@@ -1,6 +1,7 @@
 const sendGrid = require("@sendgrid/mail");
 
 sendGrid.setApiKey(process.env.S_KEY);
+
 const sendEmail = async (options) => {
   const msg = {
     to: options.email,

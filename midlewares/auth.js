@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userService = require("../services/userService");
+
 const salt = process.env.SALT;
 
 module.exports = async(req, res, next) => {
@@ -10,7 +11,7 @@ module.exports = async(req, res, next) => {
     next();
   } catch (error) {
     res.status(500).json({
-      Message: "Auth Error",
+      message: "Auth Error",
     });
   }
 };

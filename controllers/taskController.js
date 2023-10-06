@@ -1,4 +1,5 @@
 const taskService = require("../services/taskService");
+
 const root = process.env.ROOT;
 
 exports.getAllTasks = async (req, res, next) => {
@@ -83,13 +84,28 @@ exports.updateTask = async (req, res, next) => {
   }
 };
 
+exports.markCompleted = async (req, res, next) => {
+  try {
+    const id = req.params.taskID;
+    const task = await taskService.getTask(id);
+    if (task) {
+      const result = await taskService.markDone(task);
+      res.status(200).json(result);
+    } else {
+      throw "Task doesn't exist";
+    }
+  } catch (err) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+};
 exports.deleteTask = async (req, res, next) => {
   try {
     const id = req.params.taskID;
     const task = await taskService.getTask(id);
     if (task) {
       const result = await taskService.deleteTask(id);
-
       res.status(200).json({
         message: "Task deleted",
         result: result,
