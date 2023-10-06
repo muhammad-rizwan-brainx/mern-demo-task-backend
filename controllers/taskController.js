@@ -1,11 +1,10 @@
 const taskService = require("../services/taskService");
+
 const root = process.env.ROOT;
 
 exports.getAllTasks = async (req, res, next) => {
   try {
-    console.log("here")
     const docs = await taskService.getAllTasks();
-    
     const response = {
       count: docs.length,
       tasks: docs.map((doc) => {
@@ -107,7 +106,6 @@ exports.deleteTask = async (req, res, next) => {
     const task = await taskService.getTask(id);
     if (task) {
       const result = await taskService.deleteTask(id);
-
       res.status(200).json({
         message: "Task deleted",
         result: result,

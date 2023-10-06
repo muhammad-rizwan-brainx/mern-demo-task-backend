@@ -4,13 +4,13 @@ const taskController = require("../controllers/taskController");
 
 const Router = express.Router();
 
-// Router.use(checkAuth);
+Router.use(checkAuth);
 
 Router.post("/", taskController.addTask);
 Router.get("/", taskController.getAllTasks);
 Router.get("/:taskID", taskController.getTask);
-Router.patch("/:taskID", taskController.updateTask);
-Router.put("/:taskID", taskController.markCompleted);
+Router.put("/:taskID", taskController.updateTask);
+Router.patch("/:taskID", taskController.markCompleted);
 Router.delete("/:taskID", taskController.deleteTask);
 
 module.exports = Router;

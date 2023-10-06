@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Task = require("../models/taskModel");
 
 exports.getAllTasks = () => {
@@ -17,14 +16,14 @@ exports.updateTask = async (id, payload) => {
   return await Task.updateOne({ _id: id }, { $set: payload });
 };
 
-exports.markDone = async(task)=>{
-  try{
+exports.markDone = async (task) => {
+  try {
     task.isCompleted = true;
     return await task.save();
-   } catch(err){
-    console.log(err)
-   }
-}
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 exports.deleteTask = async (id) => {
   return await Task.deleteOne({ _id: id });
